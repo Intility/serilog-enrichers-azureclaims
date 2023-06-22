@@ -1,9 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Identity.Web;
-using Serilog.Enrichers.AuthenticationInformation.Enrichers;
 using System.Security.Claims;
 
-namespace Serilog.Enrichers.AuthenticationInformation;
+namespace Serilog.Enrichers.AzureAuthInfo;
 
 public class TenantIdEnricher : BaseEnricher
 {

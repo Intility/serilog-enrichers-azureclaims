@@ -1,39 +1,39 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Moq;
-using Serilog.Enrichers.AuthenticationInformation.Tests.Helpers;
+using Serilog.Enrichers.AzureAuthInfo.Tests.Helpers;
 using Serilog.Events;
 using System.Security.Claims;
 using Xunit;
 
-namespace Serilog.Enrichers.AuthenticationInformation.Tests
+namespace Serilog.Enrichers.AzureAuthInfo.Tests
 {
-    public class TenantIdEnricherTests
+    public class UPNEnricherTests
     {
         [Fact]
-        public void LogEvent_DoesNotContainTenantIdWhenUserIsNotLoggedIn()
+        public void LogEvent_DoesNotContainUPNWhenUserIsNotLoggedIn()
         {
             // Arrange
             var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
             httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
 
-            var tenantIdEnricher = new TenantIdEnricher(httpContextAccessorMock.Object);
+            var upnEnricher = new UPNEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
-                .Enrich.With(tenantIdEnricher)
+                .Enrich.With(upnEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
 
             // Act
-            log.Information(@"TenantId property is not set when user is not logged in");
+            log.Information(@"UPN property is not set when user is not logged in");
 
             // Assert
             Assert.NotNull(evt);
-            Assert.False(evt.Properties.ContainsKey("TenantId"));
+            Assert.False(evt.Properties.ContainsKey("UserPrincipalName"));
         }
 
         [Fact]
-        public void LogEvent_ContainsUnknownTenantIdWhenUserIsLoggedInButTenantIdIsNotFound()
+        public void LogEvent_ContainsUnknownUPNWhenUserIsLoggedInButUPNIsNotFound()
         {
             // Arrange
             var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
@@ -44,25 +44,25 @@ namespace Serilog.Enrichers.AuthenticationInformation.Tests
                 User = user
             });
 
-            var tenantIdEnricher = new TenantIdEnricher(httpContextAccessorMock.Object);
+            var upnEnricher = new UPNEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
-                .Enrich.With(tenantIdEnricher)
+                .Enrich.With(upnEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
 
             // Act
-            log.Information(@"TenantId property is set to unknown when user is logged in");
+            log.Information(@"UserPrincipalName property is set to unknown when user is logged in");
 
             // Assert
             Assert.NotNull(evt);
-            Assert.True(evt.Properties.ContainsKey("TenantId"));
-            Assert.Equal("unknown", evt.Properties["TenantId"].LiteralValue().ToString());
+            Assert.True(evt.Properties.ContainsKey("UserPrincipalName"));
+            Assert.Equal("unknown", evt.Properties["UserPrincipalName"].LiteralValue().ToString());
         }
 
         [Fact]
-        public void LogEvent_ContainTenantIdWhenUserIsLoggedIn()
+        public void LogEvent_ContainUPNWhenUserIsLoggedIn()
         {
             // Arrange
             var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
@@ -73,21 +73,21 @@ namespace Serilog.Enrichers.AuthenticationInformation.Tests
                 User = user
             });
 
-            var tenantIdEnricher = new TenantIdEnricher(httpContextAccessorMock.Object);
+            var upnEnricher = new UPNEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
-                .Enrich.With(tenantIdEnricher)
+                .Enrich.With(upnEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
 
             // Act
-            log.Information(@"TenantId property is set when user is logged in");
+            log.Information(@"UserPrincipalName property is set when user is logged in");
 
             // Assert
             Assert.NotNull(evt);
-            Assert.True(evt.Properties.ContainsKey("TenantId"));
-            Assert.Equal(TestConstants.TENANTID, evt.Properties["TenantId"].LiteralValue().ToString());
+            Assert.True(evt.Properties.ContainsKey("UserPrincipalName"));
+            Assert.Equal(TestConstants.UPN, evt.Properties["UserPrincipalName"].LiteralValue().ToString());
         }
     }
 }

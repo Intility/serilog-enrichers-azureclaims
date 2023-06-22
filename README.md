@@ -1,11 +1,11 @@
-# Serilog.Enrichers.AuthenticationInformation
+# Serilog.Enrichers.AzureAuthInfo
 
 Enriches Serilog events with information from the ClaimsPrincipal.
 
-Install the _Serilog.Enrichers.AuthenticationInformation_ [NuGet package](https://www.example.com/)
+Install the _Serilog.Enrichers.AzureAuthInfo_ [NuGet package](https://www.example.com/)
 
 ```powershell
-Install-Package Serilog.Enrichers.AuthenticationInformation
+Install-Package Serilog.Enrichers.AzureAuthInfo
 ```
 
 Then, apply the enricher to your `LoggerConfiguration`:

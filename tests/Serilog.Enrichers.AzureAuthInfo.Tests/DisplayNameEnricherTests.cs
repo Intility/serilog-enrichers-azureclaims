@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Moq;
-using Serilog.Enrichers.AuthenticationInformation.Tests.Helpers;
+using Serilog.Enrichers.AzureAuthInfo.Tests.Helpers;
 using Serilog.Events;
 using System.Security.Claims;
 using Xunit;
 
-namespace Serilog.Enrichers.AuthenticationInformation.Tests
+namespace Serilog.Enrichers.AzureAuthInfo.Tests
 {
     public class DisplayNameEnricherTests
     {

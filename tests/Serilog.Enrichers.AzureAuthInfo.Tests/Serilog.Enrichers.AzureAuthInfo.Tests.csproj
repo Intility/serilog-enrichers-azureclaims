@@ -22,7 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Serilog.Enrichers.AuthenticationInformation\Serilog.Enrichers.AuthenticationInformation.csproj" />
+    <ProjectReference Include="..\..\src\Serilog.Enrichers.AzureAuthInfo\Serilog.Enrichers.AzureAuthInfo.csproj" />
   </ItemGroup>
 
 </Project>

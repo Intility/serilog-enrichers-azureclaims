@@ -1,5 +1,5 @@
 ﻿using Serilog.Configuration;
-using Serilog.Enrichers.AuthenticationInformation;
+using Serilog.Enrichers.AzureAuthInfo;
 
 namespace Serilog;
 

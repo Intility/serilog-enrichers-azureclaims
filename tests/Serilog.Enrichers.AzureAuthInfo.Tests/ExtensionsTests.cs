@@ -1,7 +1,7 @@
 ﻿using Serilog.Configuration;
 using Xunit;
 
-namespace Serilog.Enrichers.AuthenticationInformation.Tests
+namespace Serilog.Enrichers.AzureAuthInfo.Tests
 {
     public class ExtensionsTests
     {

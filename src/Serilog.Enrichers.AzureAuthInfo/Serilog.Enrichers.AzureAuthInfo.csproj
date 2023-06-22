@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <AssemblyName>Serilog.Enrichers.AuthenticationInformation</AssemblyName>
-    <title>Serilog.Enrichers.AuthenticationInformation</title>
+    <AssemblyName>Serilog.Enrichers.AzureAuthInfo</AssemblyName>
+    <title>Serilog.Enrichers.AzureAuthInfo</title>
     <authors>Thorstein Løkensgard</authors>
     <owners>Thorstein Løkensgard</owners>
     <description>Enrich logs with UPN, ObjectId, TenantId etc..</description>
