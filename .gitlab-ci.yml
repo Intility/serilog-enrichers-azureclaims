@@ -1,0 +1,45 @@
+stages:
+  - test
+  - pack
+
+test:
+  stage: test
+  image: mcr.microsoft.com/dotnet/sdk:7.0
+  before_script:
+    - dotnet tool install dotnet-reportgenerator-globaltool --tool-path tools
+    - dotnet restore
+  script:
+    - dotnet test 
+      --collect "XPlat Code Coverage" 
+      --test-adapter-path:.
+      --logger:"junit;LogFilePath=..\artifacts\{assembly}-test-result.xml;MethodFormat=Class;FailureBodyFormat=Verbose"
+  after_script:
+    - ./tools/reportgenerator "-reports:${CI_PROJECT_DIR}/**/coverage.cobertura.xml" "-targetdir:Reports_Coverage" "-reportTypes:TextSummary;Cobertura";
+    - cat ./Reports_Coverage/Summary.txt
+    - echo 'End Summary'
+  coverage: /Line coverage[\s\S].+%/
+  artifacts:
+    when: always
+    paths:
+      - ${CI_PROJECT_DIR}/**/*test-result.xml
+      - ${CI_PROJECT_DIR}/**/coverage.cobertura.xml
+      - ${CI_PROJECT_DIR}/**/coverage.opencover.xml
+      - ${CI_PROJECT_DIR}/**/Reports_Coverage
+    reports:
+        junit:
+          - ./**/*test-result.xml
+        coverage_report:
+          coverage_format: cobertura
+          path: ${CI_PROJECT_DIR}/**/coverage.cobertura.xml
+  needs: [ ]
+
+release:
+  stage: pack
+  image: mcr.microsoft.com/dotnet/sdk:7.0
+  script:
+    - dotnet pack src/Serilog.Enrichers.AuthenticationInformation -o Serilog.Enrichers.AuthenticationInformation/release -p:PackageVersion=$CI_COMMIT_TAG
+    - dotnet nuget push -s $ARTIFACTORY_SOURCE -k $ARTIFACOTRY_USER:$ARTIFACTORY_KEY Serilog.Enrichers.AuthenticationInformation/release/Serilog.Enrichers.AuthenticationInformation.$CI_COMMIT_TAG.nupkg  
+  artifacts:
+    paths:
+      - Serilog.Enrichers.AuthenticationInformation/release
+    expire_in: 2 days

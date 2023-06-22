@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Identity.Web;
-using Serilog.Core;
 using Serilog.Enrichers.AuthenticationInformation.Enrichers;
-using Serilog.Events;
 using System.Security.Claims;
 
 namespace Serilog.Enrichers.AuthenticationInformation;

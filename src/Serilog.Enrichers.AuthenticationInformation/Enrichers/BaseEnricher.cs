@@ -9,21 +9,21 @@ namespace Serilog.Enrichers.AuthenticationInformation.Enrichers
     {
         protected const string UnknownValue = "unknown";
         protected IHttpContextAccessor _contextAccessor;
-        protected string ItemKey;
-        protected string PropertyName;
+        protected string _itemKey;
+        protected string _propertyName;
 
         protected BaseEnricher(string itemKey, string propertyName)
         {
             _contextAccessor = new HttpContextAccessor();
-            ItemKey = itemKey;
-            PropertyName = propertyName;
+            _itemKey = itemKey;
+            _propertyName = propertyName;
         }
 
         protected BaseEnricher(IHttpContextAccessor contextAccessor, string itemKey, string propertyName)
         {
             _contextAccessor = contextAccessor;
-            ItemKey = itemKey;
-            PropertyName = propertyName;
+            _itemKey = itemKey;
+            _propertyName = propertyName;
         }
 
         public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
@@ -35,7 +35,7 @@ namespace Serilog.Enrichers.AuthenticationInformation.Enrichers
             if (httpContext?.User?.Identity?.IsAuthenticated != true)
                 return;
 
-            if (httpContext!.Items[ItemKey] is LogEventProperty logEventProperty)
+            if (httpContext!.Items[_itemKey] is LogEventProperty logEventProperty)
             {
                 logEvent.AddPropertyIfAbsent(logEventProperty);
                 return;
@@ -45,8 +45,8 @@ namespace Serilog.Enrichers.AuthenticationInformation.Enrichers
             if (string.IsNullOrEmpty(propertyValue))
                 propertyValue = UnknownValue;
 
-            var evtProperty = new LogEventProperty(PropertyName, new ScalarValue(propertyValue));
-            httpContext!.Items.Add(ItemKey, evtProperty);
+            var evtProperty = new LogEventProperty(_propertyName, new ScalarValue(propertyValue));
+            httpContext!.Items.Add(_itemKey, evtProperty);
 
             logEvent.AddPropertyIfAbsent(evtProperty);
         }
