@@ -43,3 +43,5 @@ release:
     paths:
       - Serilog.Enrichers.AuthenticationInformation/release
     expire_in: 2 days
+  rules:
+    - if: '$CI_COMMIT_TAG'
