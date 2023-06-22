@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Moq;
-using Serilog.Core;
 using Serilog.Enrichers.AuthenticationInformation.Tests.Helpers;
 using Serilog.Events;
-using Serilog.Parsing;
 using System.Security.Claims;
 using Xunit;
 
