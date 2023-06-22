@@ -1,50 +1,23 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Identity.Web;
 using Serilog.Core;
+using Serilog.Enrichers.AuthenticationInformation.Enrichers;
 using Serilog.Events;
+using System.Security.Claims;
 
 namespace Serilog.Enrichers.AuthenticationInformation;
 
-public class DisplayNameEnricher : ILogEventEnricher
+public class DisplayNameEnricher : BaseEnricher
 {
-    private const string DisplayNamePropertyName = "DisplayName";
     private const string DisplayNameItemKey = "Serilog_DisplayName";
+    private const string DisplayNamePropertyName = "DisplayName";
 
-    private readonly IHttpContextAccessor _contextAccessor;
+    public DisplayNameEnricher() : base(DisplayNameItemKey, DisplayNamePropertyName) { }
 
-    public DisplayNameEnricher()
+    public DisplayNameEnricher(IHttpContextAccessor contextAccessor) : base(contextAccessor, DisplayNameItemKey, DisplayNamePropertyName) { }
+
+    protected override string GetPropertyValue(ClaimsPrincipal user)
     {
-        _contextAccessor = new HttpContextAccessor();
-    }
-
-    public DisplayNameEnricher(IHttpContextAccessor contextAccessor)
-    {
-        _contextAccessor = contextAccessor;
-    }
-
-    public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
-    {
-        var httpContext = _contextAccessor.HttpContext;
-        if (httpContext is null)
-            return;
-
-        if (httpContext?.User?.Identity?.IsAuthenticated != true)
-            return;
-
-        if (httpContext!.Items[DisplayNameItemKey] is LogEventProperty logEventProperty)
-        {
-            logEvent.AddPropertyIfAbsent(logEventProperty);
-            return;
-        }
-
-        var displayName = httpContext?.User?.GetDisplayName();
-        if (string.IsNullOrEmpty(displayName))
-            displayName = "unknown";
-
-        var displayNameProperty = new LogEventProperty(DisplayNamePropertyName, new ScalarValue(displayName));
-        httpContext!.Items.Add(DisplayNameItemKey, displayNameProperty);
-
-        logEvent.AddPropertyIfAbsent(displayNameProperty);
+        return user?.GetDisplayName() ?? UnknownValue;
     }
 }
-

@@ -1,50 +1,22 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Identity.Web;
-using Serilog.Core;
-using Serilog.Events;
+using Serilog.Enrichers.AuthenticationInformation.Enrichers;
+using System.Security.Claims;
 
 namespace Serilog.Enrichers.AuthenticationInformation;
 
-public class TenantIdEnricher : ILogEventEnricher
+public class TenantIdEnricher : BaseEnricher
 {
-    private const string TenantIdPropertyName = "TenantId";
     private const string TenantIdItemKey = "Serilog_TenantId";
+    private const string TenantIdPropertyName = "TenantId";
 
-    private readonly IHttpContextAccessor _contextAccessor;
+    public TenantIdEnricher() : base(TenantIdItemKey, TenantIdPropertyName) { }
 
-    public TenantIdEnricher()
+    public TenantIdEnricher(IHttpContextAccessor contextAccessor) : base(contextAccessor, TenantIdItemKey, TenantIdPropertyName) { }
+
+    protected override string GetPropertyValue(ClaimsPrincipal user)
     {
-        _contextAccessor = new HttpContextAccessor();
-    }
-
-    public TenantIdEnricher(IHttpContextAccessor contextAccessor)
-    {
-        _contextAccessor = contextAccessor;
-    }
-
-    public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
-    {
-        var httpContext = _contextAccessor.HttpContext;
-        if (httpContext is null)
-            return;
-
-        if (httpContext?.User?.Identity?.IsAuthenticated != true)
-            return;
-
-        if (httpContext!.Items[TenantIdItemKey] is LogEventProperty logEventProperty)
-        {
-            logEvent.AddPropertyIfAbsent(logEventProperty);
-            return;
-        }
-
-        var tenantId = httpContext?.User?.GetTenantId();
-        if (string.IsNullOrEmpty(tenantId))
-            tenantId = "unknown";
-
-        var tenantIdProperty = new LogEventProperty(TenantIdPropertyName, new ScalarValue(tenantId));
-        httpContext!.Items.Add(TenantIdItemKey, tenantIdProperty);
-
-        logEvent.AddPropertyIfAbsent(tenantIdProperty);
+        return user?.GetTenantId() ?? UnknownValue;
     }
 }
 

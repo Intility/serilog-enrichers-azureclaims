@@ -1,49 +1,21 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Serilog.Core;
-using Serilog.Events;
+using Serilog.Enrichers.AuthenticationInformation.Enrichers;
 using System.Security.Claims;
 
 namespace Serilog.Enrichers.AuthenticationInformation;
 
-public class UPNEnricher : ILogEventEnricher
+public class UPNEnricher : BaseEnricher
 {
-    private const string UPNPropertyName = "UserPrincipalName";
     private const string UPNItemKey = "Serilog_UPN";
+    private const string UPNPropertyName = "UserPrincipalName";
 
-    private readonly IHttpContextAccessor _contextAccessor;
-    public UPNEnricher()
+    public UPNEnricher() : base(UPNItemKey, UPNPropertyName) { }
+
+    public UPNEnricher(IHttpContextAccessor contextAccessor) : base(contextAccessor, UPNItemKey, UPNPropertyName) { }
+
+    protected override string GetPropertyValue(ClaimsPrincipal user)
     {
-        _contextAccessor = new HttpContextAccessor();
-    }
-
-    public UPNEnricher(IHttpContextAccessor contextAccessor)
-    {
-        _contextAccessor = contextAccessor;
-    }
-
-    public void Enrich(LogEvent logEvent, ILogEventPropertyFactory propertyFactory)
-    {
-        var httpContext = _contextAccessor.HttpContext;
-        if (httpContext is null)
-            return;
-
-        if (httpContext?.User?.Identity?.IsAuthenticated != true)
-            return;
-
-        if (httpContext!.Items[UPNItemKey] is LogEventProperty logEventProperty)
-        {
-            logEvent.AddPropertyIfAbsent(logEventProperty);
-            return;
-        }
-
-        var upn = httpContext?.User?.FindFirst(ClaimTypes.Upn)?.Value;
-        if (string.IsNullOrEmpty(upn))
-            upn = "unknown";
-
-        var upnProperty = new LogEventProperty(UPNPropertyName, new ScalarValue(upn));
-        httpContext!.Items.Add(UPNItemKey, upnProperty);
-
-        logEvent.AddPropertyIfAbsent(upnProperty);
+        return user?.FindFirst(ClaimTypes.Upn)?.Value ?? UnknownValue;
     }
 }
 
