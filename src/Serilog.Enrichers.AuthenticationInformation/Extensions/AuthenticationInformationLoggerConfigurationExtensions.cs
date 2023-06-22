@@ -1,6 +1,6 @@
 ﻿using Serilog.Configuration;
 
-namespace Serilog.Enrichers.AuthenticationInformation.Extesions;
+namespace Serilog;
 
 public static class AuthenticationInformationLoggerConfigurationExtensions
 {
