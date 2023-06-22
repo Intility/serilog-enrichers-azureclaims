@@ -5,7 +5,13 @@ VisualStudioVersion = 17.6.33801.468
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serilog.Enrichers.AuthenticationInformation", "src\Serilog.Enrichers.AuthenticationInformation\Serilog.Enrichers.AuthenticationInformation.csproj", "{2804ECE5-5E5E-4B44-B76C-CF565B945F6B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serilog.Enrichers.AuthenticationInformation.Tests", "tests\Serilog.Enrichers.AuthenticationInformation.Tests\Serilog.Enrichers.AuthenticationInformation.Tests.csproj", "{835A7FB7-E44C-49FC-9174-A8CC9D000202}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serilog.Enrichers.AuthenticationInformation.Tests", "tests\Serilog.Enrichers.AuthenticationInformation.Tests\Serilog.Enrichers.AuthenticationInformation.Tests.csproj", "{835A7FB7-E44C-49FC-9174-A8CC9D000202}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4B68FC67-5737-4CDC-9A29-52CE6221CCD0}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		.gitlab-ci.yml = .gitlab-ci.yml
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

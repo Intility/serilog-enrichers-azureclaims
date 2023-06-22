@@ -6,7 +6,7 @@
     <authors>Thorstein Løkensgard</authors>
     <owners>Thorstein Løkensgard</owners>
     <description>Enrich logs with UPN, ObjectId, TenantId etc..</description>
-    <Tags>Serilog UPN, OID, ObjectId, TID, TenantId, </Tags>
+    <Tags>Serilog, UPN, OID, ObjectId, TID, TenantId</Tags>
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
