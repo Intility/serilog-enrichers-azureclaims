@@ -27,8 +27,8 @@ The package includes:
 
  * `WithUPN()` - adds `UserPrincipalName` based on the ClaimType `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn`
  * `WithDisplayName()` - adds `DisplayName` based on the ClaimType `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name` or `name` or `preferred_username`
- * `TenantId()` - adds `TenantId` based on the ClimType `http://schemas.microsoft.com/identity/claims/tenantid` or `tid` 
- * `WithObjectIdentifier()` - adds `<ObjectIdentifier>` based on the ClaimType `http://schemas.microsoft.com/identity/claims/objectidentifier` or `oid`
+ * `TenantId()` - adds `TenantId` based on the ClaimType `http://schemas.microsoft.com/identity/claims/tenantid` or `tid` 
+ * `WithObjectIdentifier()` - adds `ObjectIdentifier` based on the ClaimType `http://schemas.microsoft.com/identity/claims/objectidentifier` or `oid`
 
 ## Installing into an ASP.NET Core Web Application
 You need to register the `IHttpContextAccessor` singleton so the enrichers have access to the requests `HttpContext` to extract the data.
