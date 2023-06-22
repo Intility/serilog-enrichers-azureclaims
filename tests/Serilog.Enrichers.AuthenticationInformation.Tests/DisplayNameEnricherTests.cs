@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Moq;
+using Serilog.Core;
 using Serilog.Enrichers.AuthenticationInformation.Tests.Helpers;
 using Serilog.Events;
+using Serilog.Parsing;
 using System.Security.Claims;
 using Xunit;
 
@@ -18,7 +20,7 @@ namespace Serilog.Enrichers.AuthenticationInformation.Tests
 
             var displayNameEnricher = new DisplayNameEnricher(httpContextAccessorMock.Object);
 
-            LogEvent? evt = null;
+            LogEvent evt = null;
             var log = new LoggerConfiguration()
                 .Enrich.With(displayNameEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
@@ -46,7 +48,7 @@ namespace Serilog.Enrichers.AuthenticationInformation.Tests
 
             var displayNameEnricher = new DisplayNameEnricher(httpContextAccessorMock.Object);
 
-            LogEvent? evt = null;
+            LogEvent evt = null;
             var log = new LoggerConfiguration()
                 .Enrich.With(displayNameEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
@@ -75,7 +77,7 @@ namespace Serilog.Enrichers.AuthenticationInformation.Tests
 
             var displayNameEnricher = new DisplayNameEnricher(httpContextAccessorMock.Object);
 
-            LogEvent? evt = null;
+            LogEvent evt = null;
             var log = new LoggerConfiguration()
                 .Enrich.With(displayNameEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
@@ -89,5 +91,7 @@ namespace Serilog.Enrichers.AuthenticationInformation.Tests
             Assert.True(evt.Properties.ContainsKey("DisplayName"));
             Assert.Equal(TestConstants.NAME, evt.Properties["DisplayName"].LiteralValue().ToString());
         }
+
+
     }
 }

@@ -18,7 +18,7 @@ namespace Serilog.Enrichers.AuthenticationInformation.Tests
 
             var upnEnricher = new UPNEnricher(httpContextAccessorMock.Object);
 
-            LogEvent? evt = null;
+            LogEvent evt = null;
             var log = new LoggerConfiguration()
                 .Enrich.With(upnEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
@@ -46,7 +46,7 @@ namespace Serilog.Enrichers.AuthenticationInformation.Tests
 
             var upnEnricher = new UPNEnricher(httpContextAccessorMock.Object);
 
-            LogEvent? evt = null;
+            LogEvent evt = null;
             var log = new LoggerConfiguration()
                 .Enrich.With(upnEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
@@ -75,7 +75,7 @@ namespace Serilog.Enrichers.AuthenticationInformation.Tests
 
             var upnEnricher = new UPNEnricher(httpContextAccessorMock.Object);
 
-            LogEvent? evt = null;
+            LogEvent evt = null;
             var log = new LoggerConfiguration()
                 .Enrich.With(upnEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))

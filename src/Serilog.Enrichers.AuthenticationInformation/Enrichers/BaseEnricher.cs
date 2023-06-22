@@ -51,6 +51,6 @@ namespace Serilog.Enrichers.AuthenticationInformation.Enrichers
             logEvent.AddPropertyIfAbsent(evtProperty);
         }
 
-        protected abstract string GetPropertyValue(ClaimsPrincipal user);
+        protected abstract string? GetPropertyValue(ClaimsPrincipal user);
     }
 }

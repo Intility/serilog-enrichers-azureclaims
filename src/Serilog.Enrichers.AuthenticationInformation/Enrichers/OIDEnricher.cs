@@ -14,8 +14,8 @@ public class OIDEnricher : BaseEnricher
 
     public OIDEnricher(IHttpContextAccessor contextAccessor) : base(contextAccessor, OIDItemKey, OIDPropertyName) { }
 
-    protected override string GetPropertyValue(ClaimsPrincipal user)
+    protected override string? GetPropertyValue(ClaimsPrincipal user)
     {
-        return user?.GetObjectId() ?? UnknownValue;
+        return user?.GetObjectId();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Serilog.Configuration;
+using Serilog.Enrichers.AuthenticationInformation;
 
 namespace Serilog;
 

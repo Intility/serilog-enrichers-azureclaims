@@ -14,8 +14,8 @@ public class DisplayNameEnricher : BaseEnricher
 
     public DisplayNameEnricher(IHttpContextAccessor contextAccessor) : base(contextAccessor, DisplayNameItemKey, DisplayNamePropertyName) { }
 
-    protected override string GetPropertyValue(ClaimsPrincipal user)
+    protected override string? GetPropertyValue(ClaimsPrincipal user)
     {
-        return user?.GetDisplayName() ?? UnknownValue;
+        return user?.GetDisplayName();
     }
 }

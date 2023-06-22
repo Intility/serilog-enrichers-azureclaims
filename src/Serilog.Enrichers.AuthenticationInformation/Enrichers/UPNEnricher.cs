@@ -13,9 +13,9 @@ public class UPNEnricher : BaseEnricher
 
     public UPNEnricher(IHttpContextAccessor contextAccessor) : base(contextAccessor, UPNItemKey, UPNPropertyName) { }
 
-    protected override string GetPropertyValue(ClaimsPrincipal user)
+    protected override string? GetPropertyValue(ClaimsPrincipal user)
     {
-        return user?.FindFirst(ClaimTypes.Upn)?.Value ?? UnknownValue;
+        return user?.FindFirst(ClaimTypes.Upn)?.Value;
     }
 }
 

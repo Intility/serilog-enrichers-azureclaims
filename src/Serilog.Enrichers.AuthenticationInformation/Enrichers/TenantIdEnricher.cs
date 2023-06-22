@@ -14,9 +14,9 @@ public class TenantIdEnricher : BaseEnricher
 
     public TenantIdEnricher(IHttpContextAccessor contextAccessor) : base(contextAccessor, TenantIdItemKey, TenantIdPropertyName) { }
 
-    protected override string GetPropertyValue(ClaimsPrincipal user)
+    protected override string? GetPropertyValue(ClaimsPrincipal user)
     {
-        return user?.GetTenantId() ?? UnknownValue;
+        return user?.GetTenantId();
     }
 }
 
