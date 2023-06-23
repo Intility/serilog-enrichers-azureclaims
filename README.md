@@ -1,6 +1,6 @@
 # Serilog.Enrichers.AzureAuthInfo
 
-[![Build and Tests](https://github.com/Intility/serilog-enricher-azureauthinfo/actions/workflows/compile.yaml/badge.svg)](https://github.com/Intility/serilog-enricher-azureauthinfo/actions/workflows/compile.yaml)
+[![Build and Tests](https://github.com/Intility/serilog-enricher-azureauthinfo/actions/workflows/Build_and_Test.yaml/badge.svg)](https://github.com/Intility/serilog-enricher-azureauthinfo/actions/workflows/Build_and_Test.yaml)
 
 Enriches Serilog events with information from the ClaimsPrincipal.
 
