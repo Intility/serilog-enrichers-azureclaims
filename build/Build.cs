@@ -1,16 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Nuke.Common;
-using Nuke.Common.CI;
-using Nuke.Common.Execution;
+using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
-using Nuke.Common.Tooling;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Utilities.Collections;
-using static Nuke.Common.EnvironmentInfo;
-using static Nuke.Common.IO.FileSystemTasks;
+using Nuke.Common.Tools.GitVersion;
+using System;
+using System.Linq;
 using static Nuke.Common.IO.PathConstruction;
 
 class Build : NukeBuild
@@ -21,29 +16,58 @@ class Build : NukeBuild
     ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
     ///   - Microsoft VSCode           https://nuke.build/vscode
 
-    public static int Main () => Execute<Build>(x => x.Test);
+    public static int Main() => Execute<Build>(x => x.Compile);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
 
-    AbsolutePath TestProjectDir => RootDirectory / "tests/Serilog.Enrichers.AzureAuthInfo.Tests";
+    [Parameter("Api key to use when pushing the package")]
+    readonly string NugetApiKey;
+
+    [Parameter("NuGet artifact target uri - Defaults to https://api.nuget.org/v3/index.json")]
+    readonly string PackageSource = "https://api.nuget.org/v3/index.json";
+
+    [Solution] readonly Solution Solution;
+    [GitRepository] readonly GitRepository GitRepository;
+    [GitVersion(NoFetch = true, Framework = "net7.0")] readonly GitVersion GitVersion;
+
+    AbsolutePath SourceDirectory => RootDirectory / "src";
+    AbsolutePath TestsDirectory => RootDirectory / "tests";
+    AbsolutePath OutputDirectory => RootDirectory / "output";
+
+    AbsolutePath TestProjectDir => TestsDirectory / "Serilog.Enrichers.AzureAuthInfo.Tests";
     AbsolutePath TestProjectFile => TestProjectDir / "Serilog.Enrichers.AzureAuthInfo.Tests.csproj";
+
 
     Target Clean => _ => _
         .Before(Restore)
         .Executes(() =>
         {
+            SourceDirectory.GlobDirectories("**/bin", "**/obj").DeleteDirectories();
+            TestsDirectory.GlobDirectories("**/bin", "**/obj").DeleteDirectories();
+            OutputDirectory.CreateOrCleanDirectory();
         });
 
     Target Restore => _ => _
         .Executes(() =>
         {
+            DotNetTasks.DotNetRestore(s => s
+                .SetProjectFile(Solution));
         });
 
     Target Compile => _ => _
         .DependsOn(Restore)
         .Executes(() =>
         {
+
+            DotNetTasks.DotNetBuild(s => s
+                .SetProjectFile(Solution)
+                .SetTreatWarningsAsErrors(true)
+                .SetConfiguration(Configuration)
+                .SetAssemblyVersion(GitVersion.AssemblySemVer)
+                .SetFileVersion(GitVersion.AssemblySemFileVer)
+                .SetInformationalVersion(GitVersion.InformationalVersion)
+                .EnableNoRestore());
         });
 
 
@@ -57,4 +81,29 @@ class Build : NukeBuild
            .SetNoBuild(InvokedTargets.Contains(Compile))
            .EnableNoRestore());
     });
+
+    Target Pack => _ => _
+        .DependsOn(Clean, Compile)
+        .Executes(() =>
+        {
+            DotNetTasks.DotNetPack(s => s
+                .SetProject(Solution)
+                .SetTreatWarningsAsErrors(true)
+                .EnableNoBuild()
+                .SetConfiguration(Configuration)
+                .SetVersion(GitVersion.NuGetVersionV2)
+                .SetOutputDirectory(OutputDirectory));
+        });
+
+    Target Push => _ => _
+        .DependsOn(Pack)
+        .Requires(() => NugetApiKey)
+        .Requires(() => PackageSource)
+        .Executes(() =>
+        {
+            DotNetTasks.DotNetNuGetPush(s => s
+                .SetTargetPath(OutputDirectory / $"*.nupkg")
+                .SetApiKey(NugetApiKey)
+                .SetSource(PackageSource));
+        });
 }
