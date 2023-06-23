@@ -1,5 +1,7 @@
 # Serilog.Enrichers.AzureAuthInfo
 
+[![Build and Tests](https://github.com/Intility/serilog-enricher-azureauthinfo/actions/workflows/compile.yaml/badge.svg)](https://github.com/Intility/serilog-enricher-azureauthinfo/actions/workflows/compile.yaml)
+
 Enriches Serilog events with information from the ClaimsPrincipal.
 
 Install the _Serilog.Enrichers.AzureAuthInfo_ [NuGet package](https://www.example.com/)
@@ -27,7 +29,7 @@ The package includes:
 
  * `WithUPN()` - adds `UserPrincipalName` based on the ClaimType `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/upn`
  * `WithDisplayName()` - adds `DisplayName` based on the ClaimType `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name` or `name` or `preferred_username`
- * `TenantId()` - adds `TenantId` based on the ClaimType `http://schemas.microsoft.com/identity/claims/tenantid` or `tid` 
+ * `WithTenantId()` - adds `TenantId` based on the ClaimType `http://schemas.microsoft.com/identity/claims/tenantid` or `tid` 
  * `WithObjectIdentifier()` - adds `ObjectIdentifier` based on the ClaimType `http://schemas.microsoft.com/identity/claims/objectidentifier` or `oid`
 
 ## Installing into an ASP.NET Core Web Application
