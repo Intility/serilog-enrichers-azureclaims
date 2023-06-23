@@ -21,6 +21,6 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 7.0.*
-    - name: Build with Nuke
-      run: ./build.sh compile
+    - name: Build and Test with Nuke
+      run: ./build.sh test
       shell: bash
