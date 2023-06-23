@@ -1,4 +1,5 @@
 using Nuke.Common;
+using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
@@ -8,13 +9,15 @@ using System;
 using System.Linq;
 using static Nuke.Common.IO.PathConstruction;
 
+[GitHubActions("build-and-test",
+           GitHubActionsImage.UbuntuLatest,
+           OnPushBranches = new[] { "main" },
+           OnPullRequestBranches = new[] { "main" },
+           InvokedTargets = new[] { nameof(Test) },
+           FetchDepth = 0,
+    AutoGenerate = true)]
 class Build : NukeBuild
 {
-    /// Support plugins are available for:
-    ///   - JetBrains ReSharper        https://nuke.build/resharper
-    ///   - JetBrains Rider            https://nuke.build/rider
-    ///   - Microsoft VisualStudio     https://nuke.build/visualstudio
-    ///   - Microsoft VSCode           https://nuke.build/vscode
 
     public static int Main() => Execute<Build>(x => x.Compile);
 
