@@ -14,12 +14,16 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serilog.Enrichers.AzureAuth
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serilog.Enrichers.AzureAuthInfo.Tests", "tests\Serilog.Enrichers.AzureAuthInfo.Tests\Serilog.Enrichers.AzureAuthInfo.Tests.csproj", "{824F2B9A-DF89-41BC-AEFD-0948CC00245D}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{5F59F832-0396-4FB4-88EF-48BADBB5623C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F59F832-0396-4FB4-88EF-48BADBB5623C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F59F832-0396-4FB4-88EF-48BADBB5623C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{389425DC-73F8-4B48-AAA5-5CFBFA53A89E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{389425DC-73F8-4B48-AAA5-5CFBFA53A89E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{389425DC-73F8-4B48-AAA5-5CFBFA53A89E}.Release|Any CPU.ActiveCfg = Release|Any CPU
