@@ -387,3 +387,4 @@ FodyWeavers.xsd
 .idea/
 *.sln.iml
 /Intility.Gym.Api/appsettings.Development.json
+/output
