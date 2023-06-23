@@ -1,4 +1,5 @@
 using Nuke.Common;
+using Nuke.Common.CI;
 using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
@@ -16,9 +17,9 @@ using static Nuke.Common.IO.PathConstruction;
            InvokedTargets = new[] { nameof(Test) },
            FetchDepth = 0,
     AutoGenerate = true)]
+[ShutdownDotNetAfterServerBuild]
 class Build : NukeBuild
 {
-
     public static int Main() => Execute<Build>(x => x.Compile);
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
@@ -40,6 +41,13 @@ class Build : NukeBuild
 
     AbsolutePath TestProjectDir => TestsDirectory / "Serilog.Enrichers.AzureAuthInfo.Tests";
     AbsolutePath TestProjectFile => TestProjectDir / "Serilog.Enrichers.AzureAuthInfo.Tests.csproj";
+
+    protected override void OnBuildInitialized()
+    {
+        Serilog.Log.Information("Build process started");
+
+        base.OnBuildInitialized();
+    }
 
 
     Target Clean => _ => _
