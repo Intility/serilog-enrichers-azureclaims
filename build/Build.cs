@@ -4,13 +4,16 @@ using Nuke.Common.CI.GitHubActions;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
+using Nuke.Common.Tooling;
+using Nuke.Common.Tools.Coverlet;
 using Nuke.Common.Tools.DotNet;
 using Nuke.Common.Tools.GitVersion;
+using Nuke.Common.Tools.ReportGenerator;
 using System;
 using System.Linq;
 using static Nuke.Common.IO.PathConstruction;
 
-[GitHubActions("build-and-test",
+[GitHubActions("Build and Test",
            GitHubActionsImage.UbuntuLatest,
            OnPushBranches = new[] { "main" },
            OnPullRequestBranches = new[] { "main" },
@@ -38,16 +41,11 @@ class Build : NukeBuild
     AbsolutePath SourceDirectory => RootDirectory / "src";
     AbsolutePath TestsDirectory => RootDirectory / "tests";
     AbsolutePath OutputDirectory => RootDirectory / "output";
+    AbsolutePath TestResultDirectory => OutputDirectory / "test-results";
+    AbsolutePath CoverageReportDirectory => OutputDirectory / "coberage-reports";
 
     AbsolutePath TestProjectDir => TestsDirectory / "Serilog.Enrichers.AzureAuthInfo.Tests";
     AbsolutePath TestProjectFile => TestProjectDir / "Serilog.Enrichers.AzureAuthInfo.Tests.csproj";
-
-    protected override void OnBuildInitialized()
-    {
-        Serilog.Log.Information("Build process started");
-
-        base.OnBuildInitialized();
-    }
 
 
     Target Clean => _ => _
@@ -83,14 +81,36 @@ class Build : NukeBuild
 
 
     Target Test => _ => _
-    .DependsOn(Compile)
+        .DependsOn(Compile)
+        .Produces(TestResultDirectory / "*.trx")
+        .Produces(TestResultDirectory / "*.xml")    
+        .Executes(() =>
+        {
+            DotNetTasks.DotNetTest(s => s
+               .SetProjectFile(TestProjectFile)
+               .SetConfiguration(Configuration)
+               .SetNoBuild(InvokedTargets.Contains(Compile))
+               .EnableNoRestore()
+               .ResetVerbosity()
+               .SetResultsDirectory(TestResultDirectory)
+               .EnableCollectCoverage()
+               .SetCoverletOutputFormat(CoverletOutputFormat.opencover)
+               .SetProcessArgumentConfigurator(a => a.Add("--collect:\"XPlat Code Coverage\""))
+               .SetLoggers($"junit;LogFileName={"coverage.trx"}")
+               .SetCoverletOutput(TestResultDirectory / "coverage.cobertura.xml")
+               );
+        });
+
+    Target ReportCoverage => _ => _
+        .DependsOn(Test)
+        .Consumes(Test)
     .Executes(() =>
     {
-        DotNetTasks.DotNetTest(s => s
-           .SetProjectFile(TestProjectFile)
-           .SetConfiguration(Configuration)
-           .SetNoBuild(InvokedTargets.Contains(Compile))
-           .EnableNoRestore());
+        ReportGeneratorTasks.ReportGenerator(s => s
+           .SetReports(TestResultDirectory / "**/*.xml")
+           .SetReportTypes(ReportTypes.Cobertura, ReportTypes.TextSummary)
+           .SetTargetDirectory(CoverageReportDirectory)
+           .SetAssemblyFilters("-*Tests"));
     });
 
     Target Pack => _ => _
