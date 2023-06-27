@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 
-namespace Serilog.Enrichers.AzureAuthInfo;
+namespace Serilog.Enrichers.AzureClaims;
 
 public class UPNEnricher : BaseEnricher
 {

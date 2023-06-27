@@ -1,4 +1,4 @@
-﻿namespace Serilog.Enrichers.AzureAuthInfo.Tests.Helpers
+﻿namespace Serilog.Enrichers.AzureClaims.Tests.Helpers
 {
     public static class TestConstants
     {

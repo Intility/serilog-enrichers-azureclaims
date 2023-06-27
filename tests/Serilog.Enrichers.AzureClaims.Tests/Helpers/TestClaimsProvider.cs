@@ -1,7 +1,7 @@
 ﻿using Microsoft.Identity.Web;
 using System.Security.Claims;
 
-namespace Serilog.Enrichers.AzureAuthInfo.Tests.Helpers
+namespace Serilog.Enrichers.AzureClaims.Tests.Helpers
 {
     public class TestClaimsProvider
     {

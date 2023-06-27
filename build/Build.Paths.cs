@@ -10,6 +10,6 @@ partial class Build
 
     AbsolutePath PackageDirectory => OutputDirectory / "packages";
 
-    AbsolutePath TestProjectDir => TestsDirectory / "Serilog.Enrichers.AzureAuthInfo.Tests";
-    AbsolutePath TestProjectFile => TestProjectDir / "Serilog.Enrichers.AzureAuthInfo.Tests.csproj";
+    AbsolutePath TestProjectDir => TestsDirectory / "Serilog.Enrichers.AzureClaims.Tests";
+    AbsolutePath TestProjectFile => TestProjectDir / "Serilog.Enrichers.AzureClaims.Tests.csproj";
 }

@@ -2,7 +2,7 @@
 using Microsoft.Identity.Web;
 using System.Security.Claims;
 
-namespace Serilog.Enrichers.AzureAuthInfo;
+namespace Serilog.Enrichers.AzureClaims;
 
 public class OIDEnricher : BaseEnricher
 {

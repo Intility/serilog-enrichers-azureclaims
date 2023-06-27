@@ -1,39 +1,39 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Moq;
-using Serilog.Enrichers.AzureAuthInfo.Tests.Helpers;
+using Serilog.Enrichers.AzureClaims.Tests.Helpers;
 using Serilog.Events;
 using System.Security.Claims;
 using Xunit;
 
-namespace Serilog.Enrichers.AzureAuthInfo.Tests
+namespace Serilog.Enrichers.AzureClaims.Tests
 {
-    public class UPNEnricherTests
+    public class OIDEnricherTests
     {
         [Fact]
-        public void LogEvent_DoesNotContainUPNWhenUserIsNotLoggedIn()
+        public void LogEvent_DoesNotContainOIDWhenUserIsNotLoggedIn()
         {
             // Arrange
             var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
             httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
 
-            var upnEnricher = new UPNEnricher(httpContextAccessorMock.Object);
+            var oidEnricher = new OIDEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
-                .Enrich.With(upnEnricher)
+                .Enrich.With(oidEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
 
             // Act
-            log.Information(@"UPN property is not set when user is not logged in");
+            log.Information(@"ObjectIdentifier property is not set when user is not logged in");
 
             // Assert
             Assert.NotNull(evt);
-            Assert.False(evt.Properties.ContainsKey("UserPrincipalName"));
+            Assert.False(evt.Properties.ContainsKey("ObjectIdentifier"));
         }
 
         [Fact]
-        public void LogEvent_ContainsUnknownUPNWhenUserIsLoggedInButUPNIsNotFound()
+        public void LogEvent_ContainsUnknownOIDWhenUserIsLoggedInButOIDIsNotFound()
         {
             // Arrange
             var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
@@ -44,25 +44,25 @@ namespace Serilog.Enrichers.AzureAuthInfo.Tests
                 User = user
             });
 
-            var upnEnricher = new UPNEnricher(httpContextAccessorMock.Object);
+            var oidEnricher = new OIDEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
-                .Enrich.With(upnEnricher)
+                .Enrich.With(oidEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
 
             // Act
-            log.Information(@"UserPrincipalName property is set to unknown when user is logged in");
+            log.Information(@"ObjectIdentifier property is set to unknown when user is logged in");
 
             // Assert
             Assert.NotNull(evt);
-            Assert.True(evt.Properties.ContainsKey("UserPrincipalName"));
-            Assert.Equal("unknown", evt.Properties["UserPrincipalName"].LiteralValue().ToString());
+            Assert.True(evt.Properties.ContainsKey("ObjectIdentifier"));
+            Assert.Equal("unknown", evt.Properties["ObjectIdentifier"].LiteralValue().ToString());
         }
 
         [Fact]
-        public void LogEvent_ContainUPNWhenUserIsLoggedIn()
+        public void LogEvent_ContainOIDWhenUserIsLoggedIn()
         {
             // Arrange
             var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
@@ -73,21 +73,21 @@ namespace Serilog.Enrichers.AzureAuthInfo.Tests
                 User = user
             });
 
-            var upnEnricher = new UPNEnricher(httpContextAccessorMock.Object);
+            var oidEnricher = new OIDEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
-                .Enrich.With(upnEnricher)
+                .Enrich.With(oidEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
 
             // Act
-            log.Information(@"UserPrincipalName property is set when user is logged in");
+            log.Information(@"ObjectIdentifier property is set when user is logged in");
 
             // Assert
             Assert.NotNull(evt);
-            Assert.True(evt.Properties.ContainsKey("UserPrincipalName"));
-            Assert.Equal(TestConstants.UPN, evt.Properties["UserPrincipalName"].LiteralValue().ToString());
+            Assert.True(evt.Properties.ContainsKey("ObjectIdentifier"));
+            Assert.Equal(TestConstants.OID, evt.Properties["ObjectIdentifier"].LiteralValue().ToString());
         }
     }
 }

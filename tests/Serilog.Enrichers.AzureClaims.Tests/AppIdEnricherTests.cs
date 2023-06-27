@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Moq;
-using Serilog.Enrichers.AzureAuthInfo.Tests.Helpers;
+using Serilog.Enrichers.AzureClaims.Tests.Helpers;
 using Serilog.Events;
 using System.Security.Claims;
 using Xunit;
 
-namespace Serilog.Enrichers.AzureAuthInfo.Tests
+namespace Serilog.Enrichers.AzureClaims.Tests
 {
     public class AppIdEnricherTests
     {
@@ -64,7 +64,7 @@ namespace Serilog.Enrichers.AzureAuthInfo.Tests
         [Theory]
         [InlineData("azp")]
         [InlineData("appid")]
-        public void LogEvent_ContainAztWhenUserIsLoggedIn(string claim)
+        public void LogEvent_ContainAppIdWhenUserIsLoggedIn(string claim)
         {
             // Arrange
             var httpContextAccessorMock = new Mock<IHttpContextAccessor>();

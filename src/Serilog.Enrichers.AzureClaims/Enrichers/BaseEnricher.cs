@@ -3,7 +3,7 @@ using Serilog.Core;
 using Serilog.Events;
 using System.Security.Claims;
 
-namespace Serilog.Enrichers.AzureAuthInfo;
+namespace Serilog.Enrichers.AzureClaims;
 
 public abstract class BaseEnricher : ILogEventEnricher
 {

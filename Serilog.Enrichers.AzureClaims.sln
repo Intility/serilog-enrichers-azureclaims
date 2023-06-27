@@ -1,0 +1,42 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.6.33801.468
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4B68FC67-5737-4CDC-9A29-52CE6221CCD0}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE = LICENSE
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "build\_build.csproj", "{5F59F832-0396-4FB4-88EF-48BADBB5623C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serilog.Enrichers.AzureClaims", "src\Serilog.Enrichers.AzureClaims\Serilog.Enrichers.AzureClaims.csproj", "{3FFC6CC2-072F-4E1A-8941-13030DC2049A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Serilog.Enrichers.AzureClaims.Tests", "tests\Serilog.Enrichers.AzureClaims.Tests\Serilog.Enrichers.AzureClaims.Tests.csproj", "{EAECB584-06F0-47BD-8A95-479C7E51ACF2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F59F832-0396-4FB4-88EF-48BADBB5623C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F59F832-0396-4FB4-88EF-48BADBB5623C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FFC6CC2-072F-4E1A-8941-13030DC2049A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3FFC6CC2-072F-4E1A-8941-13030DC2049A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3FFC6CC2-072F-4E1A-8941-13030DC2049A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3FFC6CC2-072F-4E1A-8941-13030DC2049A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EAECB584-06F0-47BD-8A95-479C7E51ACF2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EAECB584-06F0-47BD-8A95-479C7E51ACF2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EAECB584-06F0-47BD-8A95-479C7E51ACF2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EAECB584-06F0-47BD-8A95-479C7E51ACF2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C0E30080-EBC2-4656-BE2C-F86EC70DE219}
+	EndGlobalSection
+EndGlobal

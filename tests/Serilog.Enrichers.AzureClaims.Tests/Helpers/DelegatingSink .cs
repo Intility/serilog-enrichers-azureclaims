@@ -1,7 +1,7 @@
 ﻿using Serilog.Core;
 using Serilog.Events;
 
-namespace Serilog.Enrichers.AzureAuthInfo.Tests.Helpers
+namespace Serilog.Enrichers.AzureClaims.Tests.Helpers
 {
     public class DelegatingSink : ILogEventSink
     {

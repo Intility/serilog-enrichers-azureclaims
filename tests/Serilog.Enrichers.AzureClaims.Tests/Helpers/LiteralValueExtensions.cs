@@ -1,6 +1,6 @@
 ﻿using Serilog.Events;
 
-namespace Serilog.Enrichers.AzureAuthInfo.Tests.Helpers
+namespace Serilog.Enrichers.AzureClaims.Tests.Helpers
 {
     internal static class LiteralValueExtensions
     {
