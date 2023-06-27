@@ -40,7 +40,7 @@ namespace Serilog.Enrichers.AzureAuthInfo.Tests
             var expectedExceptionMessage = "Value cannot be null. (Parameter 'enrichmentConfiguration')";
 
             // Act and Assert
-            var exception = Assert.Throws<ArgumentNullException>(() => enrichmentConfiguration.WithTenantId());
+            var exception = Assert.Throws<ArgumentNullException>(() => enrichmentConfiguration.WithTID());
             Assert.Equal(expectedExceptionMessage, exception.Message);
         }
 
@@ -53,7 +53,7 @@ namespace Serilog.Enrichers.AzureAuthInfo.Tests
             var expectedExceptionMessage = "Value cannot be null. (Parameter 'enrichmentConfiguration')";
 
             // Act and Assert
-            var exception = Assert.Throws<ArgumentNullException>(() => enrichmentConfiguration.WithObjectIdentifier());
+            var exception = Assert.Throws<ArgumentNullException>(() => enrichmentConfiguration.WithOID());
             Assert.Equal(expectedExceptionMessage, exception.Message);
         }
     }
