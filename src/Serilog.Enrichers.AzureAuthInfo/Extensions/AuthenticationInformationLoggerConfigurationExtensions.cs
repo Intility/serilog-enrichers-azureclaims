@@ -62,4 +62,20 @@ public static class AuthenticationInformationLoggerConfigurationExtensions
 
         return enrichmentConfiguration.With<TenantIdEnricher>();
     }
+
+    /// <summary>
+    /// Adds a application ID (AppId/AZP) enrichment to the logger configuration.
+    /// </summary>
+    /// <param name="enrichmentConfiguration">The logger enrichment configuration.</param>
+    /// <remarks>
+    /// The application ID (AppId/AZP) is named appid in v1 tokens and azp in v2 tokens..
+    /// </remarks>
+    /// <returns>The logger configuration with the TID enrichment added.</returns>
+    public static LoggerConfiguration WithAppId(this LoggerEnrichmentConfiguration enrichmentConfiguration)
+    {
+        if (enrichmentConfiguration is null)
+            throw new ArgumentNullException(nameof(enrichmentConfiguration));
+
+        return enrichmentConfiguration.With<TenantIdEnricher>();
+    }
 }
