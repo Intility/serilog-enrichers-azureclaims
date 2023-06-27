@@ -76,6 +76,6 @@ public static class AuthenticationInformationLoggerConfigurationExtensions
         if (enrichmentConfiguration is null)
             throw new ArgumentNullException(nameof(enrichmentConfiguration));
 
-        return enrichmentConfiguration.With<TenantIdEnricher>();
+        return enrichmentConfiguration.With<AppIdEnricher>();
     }
 }

@@ -1,10 +1,14 @@
 # Serilog.Enrichers.AzureClaims
 
-[![Build_and_Test](https://github.com/Intility/serilog-enricher-azureauthinfo/actions/workflows/Build_and_Test.yml/badge.svg)](https://github.com/Intility/serilog-enricher-azureauthinfo/actions/workflows/Build_and_Test.yml)
+[![Build_and_Test](https://github.com/Intility/serilog-enrichers-azureclaims/actions/workflows/Build_and_Test.yml/badge.svg)](https://github.com/Intility/serilog-enrichers-azureclaims/actions/workflows/Build_and_Test.yml)
+[![Publish](https://github.com/Intility/serilog-enrichers-azureclaims/actions/workflows/Publish.yml/badge.svg)](https://github.com/Intility/serilog-enrichers-azureclaims/actions/workflows/Publish.yml)
+
+![Nuget](https://img.shields.io/nuget/dt/Serilog.Enrichers.AzureClaims)
+
 
 Enriches Serilog events with information from the ClaimsPrincipal.
 
-Install the _Serilog.Enrichers.AzureClaims_ [NuGet package](https://www.example.com/)
+Install the _Serilog.Enrichers.AzureClaims_ [NuGet package](https://www.nuget.org/packages/Serilog.Enrichers.AzureClaims/)
 
 ```powershell
 Install-Package Serilog.Enrichers.AzureClaims
@@ -49,6 +53,7 @@ builder.Logging.AddSerilog(new LoggerConfiguration()
     .Enrich.WithDisplayName()
     .Enrich.WithTID()
     .Enrich.WithOID()
+    .Enrich.WithAppId()
     .CreateLogger());
 
 // ...
