@@ -18,6 +18,7 @@ Log.Logger = new LoggerConfiguration()
     .Enrich.WithDisplayName()
     .Enrich.WithTID()
     .Enrich.WithOID()
+    .Enrich.WithAppId()
     // ...other configuration...
     .CreateLogger();
 ```
@@ -31,6 +32,7 @@ The package includes:
  * `WithDisplayName()` - adds `DisplayName` based on the ClaimType `http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name` or `name` or `preferred_username`
  * `WithTID()` - adds `TenantId` based on the ClaimType `http://schemas.microsoft.com/identity/claims/tenantid` or `tid` 
  * `WithOID()` - adds `ObjectIdentifier` based on the ClaimType `http://schemas.microsoft.com/identity/claims/objectidentifier` or `oid`
+ * `WithAppId` - adds `AppId` based on the CLaimType `appid` or `azp` 
 
 ## Installing into an ASP.NET Core Web Application
 You need to register the `IHttpContextAccessor` singleton so the enrichers have access to the requests `HttpContext` to extract the data.
