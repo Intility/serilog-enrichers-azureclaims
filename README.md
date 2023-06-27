@@ -16,8 +16,8 @@ Then, apply the enricher to your `LoggerConfiguration`:
 Log.Logger = new LoggerConfiguration()
     .Enrich.WithUPN()
     .Enrich.WithDisplayName()
-    .Enrich.TenantId()
-    .Enrich.WithObjectIdentifier()
+    .Enrich.WithTID()
+    .Enrich.WithOID()
     // ...other configuration...
     .CreateLogger();
 ```
@@ -43,10 +43,10 @@ using Serilog;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Logging.AddSerilog(new LoggerConfiguration()
-    .Enrich.WithDisplayName()
     .Enrich.WithUPN()
-    .Enrich.WithTenantId()
-    .Enrich.WithObjectIdentifier()
+    .Enrich.WithDisplayName()
+    .Enrich.WithTID()
+    .Enrich.WithOID()
     .CreateLogger());
 
 // ...
