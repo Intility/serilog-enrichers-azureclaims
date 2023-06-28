@@ -13,7 +13,7 @@
     <owners>Intility</owners>
     <Company>Intility</Company>
     <description>Enrich logs with Azure AD Claims</description>
-    <Tags>Serilog, UPN, OID, ObjectId, TID, TenantId</Tags>
+    <Tags>Serilog, UPN, OID, ObjectId, TID, TenantId, Azure Claims</Tags>
     <PackageReadMeFile>README.md</PackageReadMeFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
