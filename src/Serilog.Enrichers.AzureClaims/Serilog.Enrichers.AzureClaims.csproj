@@ -1,15 +1,19 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <TargetFramework>net7.0;net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  
+  <PropertyGroup>
     <AssemblyName>Serilog.Enrichers.AzureClaims</AssemblyName>
     <title>Serilog.Enrichers.AzureClaims</title>
     <authors>Thorstein Løkensgard</authors>
     <owners>Intility</owners>
+    <Company>Intility</Company>
     <description>Enrich logs with Azure AD Claims</description>
     <Tags>Serilog, UPN, OID, ObjectId, TID, TenantId</Tags>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
     <PackageReadMeFile>README.md</PackageReadMeFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
   </PropertyGroup>
