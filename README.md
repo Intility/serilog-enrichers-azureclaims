@@ -1,12 +1,11 @@
 # Serilog.Enrichers.AzureClaims
+Enriches Serilog events with information from the ClaimsPrincipal.
 
 [![Build_and_Test](https://github.com/Intility/serilog-enrichers-azureclaims/actions/workflows/Build_and_Test.yml/badge.svg)](https://github.com/Intility/serilog-enrichers-azureclaims/actions/workflows/Build_and_Test.yml)
 [![Publish](https://github.com/Intility/serilog-enrichers-azureclaims/actions/workflows/Publish.yml/badge.svg)](https://github.com/Intility/serilog-enrichers-azureclaims/actions/workflows/Publish.yml)
 
-![Nuget](https://img.shields.io/nuget/dt/Serilog.Enrichers.AzureClaims)
-
-
-Enriches Serilog events with information from the ClaimsPrincipal.
+![Nuget](https://img.shields.io/nuget/v/Serilog.Enrichers.AzureClaims?label=Serilog.Enrichers.AzureClaims)
+![Nuget](https://img.shields.io/nuget/dt/Serilog.Enrichers.AzureClaims?logo=nuget&label=Downloads)
 
 Install the _Serilog.Enrichers.AzureClaims_ [NuGet package](https://www.nuget.org/packages/Serilog.Enrichers.AzureClaims/)
 
