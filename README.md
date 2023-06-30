@@ -3,6 +3,7 @@ Enriches Serilog events with information from the ClaimsPrincipal.
 
 [![Build_and_Test](https://github.com/Intility/serilog-enrichers-azureclaims/actions/workflows/Build_and_Test.yml/badge.svg)](https://github.com/Intility/serilog-enrichers-azureclaims/actions/workflows/Build_and_Test.yml)
 [![Publish](https://github.com/Intility/serilog-enrichers-azureclaims/actions/workflows/Publish.yml/badge.svg)](https://github.com/Intility/serilog-enrichers-azureclaims/actions/workflows/Publish.yml)
+[![codecov](https://codecov.io/github/Intility/serilog-enrichers-azureclaims/branch/main/graph/badge.svg?token=e3ScijDl0q)](https://codecov.io/github/Intility/serilog-enrichers-azureclaims)
 
 ![Nuget](https://img.shields.io/nuget/v/Serilog.Enrichers.AzureClaims?label=Serilog.Enrichers.AzureClaims)
 ![Nuget](https://img.shields.io/nuget/dt/Serilog.Enrichers.AzureClaims?logo=nuget&label=Downloads)
