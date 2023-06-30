@@ -46,3 +46,10 @@ jobs:
         with:
           name: test-results
           path: output/test-results
+      - name: Upload Coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          fail_ci_if_error: true
+          files: output/test-results/**/*.xml
+          verbose: true
