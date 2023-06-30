@@ -16,11 +16,11 @@ namespace Serilog.Enrichers.AzureClaims.Tests
             var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
             httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
 
-            var upnEnricher = new AppIdEnricher(httpContextAccessorMock.Object);
+            var appidEnricher = new AppIdEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
-                .Enrich.With(upnEnricher)
+                .Enrich.With(appidEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
 
@@ -44,11 +44,11 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 User = user
             });
 
-            var upnEnricher = new AppIdEnricher(httpContextAccessorMock.Object);
+            var appidEnricher = new AppIdEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
-                .Enrich.With(upnEnricher)
+                .Enrich.With(appidEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
 
@@ -76,11 +76,11 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 User = user
             });
 
-            var upnEnricher = new AppIdEnricher(httpContextAccessorMock.Object);
+            var appidEnricher = new AppIdEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
-                .Enrich.With(upnEnricher)
+                .Enrich.With(appidEnricher)
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
 

@@ -1,9 +1,9 @@
 ﻿using Serilog.Configuration;
 using Xunit;
 
-namespace Serilog.Enrichers.AzureClaims.Tests
+namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
 {
-    public class ExtensionsTests
+    public class ExtensionsExceptionsTests
     {
         [Fact]
         public void WithDisplayName_EnrichmentConfigurationIsNull_ThrowsArgumentNullException()
