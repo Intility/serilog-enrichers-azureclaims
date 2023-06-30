@@ -53,7 +53,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
         {
             var executingAssembly = Assembly.GetExecutingAssembly();
             var projectDirectory = Path.GetDirectoryName(executingAssembly.Location);
-            var targetDirectory = Path.Combine(projectDirectory, "..\\..\\..\\..\\..\\src\\Serilog.Enrichers.AzureClaims");
+            var targetDirectory = Path.Combine(projectDirectory, "..", "..", "..", "..", "..", "src", "Serilog.Enrichers.AzureClaims");
             var files = Directory.GetFiles(targetDirectory, "*Enricher.cs", SearchOption.AllDirectories);
 
             var count = files.Count(file => !Path.GetFileName(file).Equals("BaseEnricher.cs", StringComparison.OrdinalIgnoreCase));
