@@ -56,5 +56,18 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
             var exception = Assert.Throws<ArgumentNullException>(() => enrichmentConfiguration.WithOID());
             Assert.Equal(expectedExceptionMessage, exception.Message);
         }
+
+        [Fact]
+        public void WithAppId_EnrichmentConfigurationIsNull_ThrowsArgumentNullException()
+        {
+            // Arrange
+            LoggerEnrichmentConfiguration enrichmentConfiguration = null;
+
+            var expectedExceptionMessage = "Value cannot be null. (Parameter 'enrichmentConfiguration')";
+
+            // Act and Assert
+            var exception = Assert.Throws<ArgumentNullException>(() => enrichmentConfiguration.WithAppId());
+            Assert.Equal(expectedExceptionMessage, exception.Message);
+        }
     }
 }
