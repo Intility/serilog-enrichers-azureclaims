@@ -12,7 +12,7 @@ using Nuke.Common.Tools.ReportGenerator;
            OnPullRequestBranches = new[] { "main" },
            InvokedTargets = new[] { nameof(Test) },
            FetchDepth = 0,
-    AutoGenerate = true)]
+    AutoGenerate = false)]
 partial class Build : NukeBuild
 {
     Target Test => _ => _
