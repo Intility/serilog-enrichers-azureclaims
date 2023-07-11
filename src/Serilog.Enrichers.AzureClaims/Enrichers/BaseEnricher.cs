@@ -8,7 +8,7 @@ namespace Serilog.Enrichers.AzureClaims;
 /// <summary>
 /// Represents a base class for log event enrichers.
 /// </summary>
-public abstract class BaseEnricher : ILogEventEnricher
+internal abstract class BaseEnricher : ILogEventEnricher
 {
     /// <summary>
     /// The unknown value to be used when the property value is not available.
@@ -66,21 +66,21 @@ public abstract class BaseEnricher : ILogEventEnricher
         if (httpContext is null)
             return;
 
-        if (httpContext?.User?.Identity?.IsAuthenticated != true)
+        if (httpContext.User.Identity?.IsAuthenticated != true)
             return;
 
-        if (httpContext!.Items[_itemKey] is LogEventProperty logEventProperty)
+        if (httpContext.Items[_itemKey] is LogEventProperty logEventProperty)
         {
             logEvent.AddPropertyIfAbsent(logEventProperty);
             return;
         }
 
-        var propertyValue = GetPropertyValue(httpContext?.User!);
+        var propertyValue = GetPropertyValue(httpContext.User);
         if (string.IsNullOrEmpty(propertyValue))
             propertyValue = UnknownValue;
 
         var evtProperty = new LogEventProperty(_propertyName, new ScalarValue(propertyValue));
-        httpContext!.Items.Add(_itemKey, evtProperty);
+        httpContext.Items.Add(_itemKey, evtProperty);
 
         logEvent.AddPropertyIfAbsent(evtProperty);
     }

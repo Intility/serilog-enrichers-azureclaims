@@ -7,21 +7,21 @@ namespace Serilog.Enrichers.AzureClaims;
 /// <summary>
 /// Enriches log events with the Object Identifier (OID) property from the user's claims.
 /// </summary>
-public class OIDEnricher : BaseEnricher
+internal class ObjectIdEnricher : BaseEnricher
 {
     private const string OIDItemKey = "Serilog_OID";
-    private const string OIDPropertyName = "ObjectIdentifier";
+    private const string OIDPropertyName = "ObjectId";
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="OIDEnricher"/> class.
+    /// Initializes a new instance of the <see cref="ObjectIdEnricher"/> class.
     /// </summary>
-    public OIDEnricher() : base(OIDItemKey, OIDPropertyName) { }
+    public ObjectIdEnricher() : base(OIDItemKey, OIDPropertyName) { }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="OIDEnricher"/> class with the specified HTTP context accessor.
+    /// Initializes a new instance of the <see cref="ObjectIdEnricher"/> class with the specified HTTP context accessor.
     /// </summary>
     /// <param name="contextAccessor">The HTTP context accessor to use for retrieving the user's claims.</param>
-    public OIDEnricher(IHttpContextAccessor contextAccessor) : base(contextAccessor, OIDItemKey, OIDPropertyName) { }
+    internal ObjectIdEnricher(IHttpContextAccessor contextAccessor) : base(contextAccessor, OIDItemKey, OIDPropertyName) { }
 
     /// <summary>
     /// Gets the Object Identifier (OID) property value from the specified claims principal.
@@ -30,7 +30,7 @@ public class OIDEnricher : BaseEnricher
     /// <returns>The Object Identifier (OID) property value, or <c>null</c> if it cannot be found.</returns>
     protected override string? GetPropertyValue(ClaimsPrincipal user)
     {
-        return user?.GetObjectId();
+        return user.GetObjectId();
     }
 }
 

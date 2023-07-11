@@ -95,7 +95,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests
 
     }
 
-    public class TestEnricher : BaseEnricher
+    internal class TestEnricher : BaseEnricher
     {
         public TestEnricher(string itemKey, string propertyName) : base(itemKey, propertyName)
         {

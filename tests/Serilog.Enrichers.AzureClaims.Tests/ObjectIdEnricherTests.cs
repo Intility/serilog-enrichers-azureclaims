@@ -16,7 +16,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests
             var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
             httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
 
-            var oidEnricher = new OIDEnricher(httpContextAccessorMock.Object);
+            var oidEnricher = new ObjectIdEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -25,11 +25,11 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 .CreateLogger();
 
             // Act
-            log.Information(@"ObjectIdentifier property is not set when user is not logged in");
+            log.Information(@"ObjectId property is not set when user is not logged in");
 
             // Assert
             Assert.NotNull(evt);
-            Assert.False(evt.Properties.ContainsKey("ObjectIdentifier"));
+            Assert.False(evt.Properties.ContainsKey("ObjectId"));
         }
 
         [Fact]
@@ -44,7 +44,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 User = user
             });
 
-            var oidEnricher = new OIDEnricher(httpContextAccessorMock.Object);
+            var oidEnricher = new ObjectIdEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -53,12 +53,12 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 .CreateLogger();
 
             // Act
-            log.Information(@"ObjectIdentifier property is set to unknown when user is logged in");
+            log.Information(@"ObjectId property is set to unknown when user is logged in");
 
             // Assert
             Assert.NotNull(evt);
-            Assert.True(evt.Properties.ContainsKey("ObjectIdentifier"));
-            Assert.Equal("unknown", evt.Properties["ObjectIdentifier"].LiteralValue().ToString());
+            Assert.True(evt.Properties.ContainsKey("ObjectId"));
+            Assert.Equal("unknown", evt.Properties["ObjectId"].LiteralValue().ToString());
         }
 
         [Fact]
@@ -73,7 +73,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 User = user
             });
 
-            var oidEnricher = new OIDEnricher(httpContextAccessorMock.Object);
+            var oidEnricher = new ObjectIdEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -82,12 +82,12 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 .CreateLogger();
 
             // Act
-            log.Information(@"ObjectIdentifier property is set when user is logged in");
+            log.Information(@"ObjectId property is set when user is logged in");
 
             // Assert
             Assert.NotNull(evt);
-            Assert.True(evt.Properties.ContainsKey("ObjectIdentifier"));
-            Assert.Equal(TestConstants.OID, evt.Properties["ObjectIdentifier"].LiteralValue().ToString());
+            Assert.True(evt.Properties.ContainsKey("ObjectId"));
+            Assert.Equal(TestConstants.OID, evt.Properties["ObjectId"].LiteralValue().ToString());
         }
     }
 }

@@ -21,10 +21,10 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
             // Remember to add all enrichers to the builder, if not the test will fail
             LogEvent evt = null;
             var log = new LoggerConfiguration()
-                .Enrich.WithUPN()
+                .Enrich.WithUpn()
                 .Enrich.WithAppId()
-                .Enrich.WithTID()
-                .Enrich.WithOID()
+                .Enrich.WithTenantId()
+                .Enrich.WithObjectId()
                 .Enrich.WithDisplayName()
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
@@ -40,10 +40,10 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
             // Assert that all Enrichers are added to the builder
             Assert.Equal(GetCountOfEnrichers(), enrichers.Count());
             Assert.Collection(enrichers,
-                item => Assert.Equal(nameof(UPNEnricher), item.GetType().Name),
+                item => Assert.Equal(nameof(UpnEnricher), item.GetType().Name),
                 item => Assert.Equal(nameof(AppIdEnricher), item.GetType().Name),
                 item => Assert.Equal(nameof(TenantIdEnricher), item.GetType().Name),
-                item => Assert.Equal(nameof(OIDEnricher), item.GetType().Name),
+                item => Assert.Equal(nameof(ObjectIdEnricher), item.GetType().Name),
                 item => Assert.Equal(nameof(DisplayNameEnricher), item.GetType().Name));
         }
 
@@ -69,7 +69,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
-                .Enrich.WithUPN()
+                .Enrich.WithUpn()
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
 
@@ -79,7 +79,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
             var aggregateEnricher = aggregateEnricherFieldInfo?.GetValue(log);
             var enricher = aggregateEnricher.GetType();
 
-            Assert.Equal(nameof(UPNEnricher), enricher.Name);
+            Assert.Equal(nameof(UpnEnricher), enricher.Name);
         }
 
         [Fact]
@@ -113,7 +113,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
-                .Enrich.WithTID()
+                .Enrich.WithTenantId()
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
 
@@ -157,7 +157,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
-                .Enrich.WithOID()
+                .Enrich.WithObjectId()
                 .WriteTo.Sink(new DelegatingSink(e => evt = e))
                 .CreateLogger();
 
@@ -167,7 +167,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
             var aggregateEnricher = aggregateEnricherFieldInfo?.GetValue(log);
             var enricher = aggregateEnricher.GetType();
 
-            Assert.Equal(nameof(OIDEnricher), enricher.Name);
+            Assert.Equal(nameof(ObjectIdEnricher), enricher.Name);
         }
     }
 }

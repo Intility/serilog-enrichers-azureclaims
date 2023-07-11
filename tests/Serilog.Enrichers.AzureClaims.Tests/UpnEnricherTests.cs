@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Serilog.Enrichers.AzureClaims.Tests
 {
-    public class UPNEnricherTests
+    public class UpnEnricherTests
     {
         [Fact]
         public void LogEvent_DoesNotContainUPNWhenUserIsNotLoggedIn()
@@ -16,7 +16,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests
             var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
             httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
 
-            var upnEnricher = new UPNEnricher(httpContextAccessorMock.Object);
+            var upnEnricher = new UpnEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -44,7 +44,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 User = user
             });
 
-            var upnEnricher = new UPNEnricher(httpContextAccessorMock.Object);
+            var upnEnricher = new UpnEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -73,7 +73,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 User = user
             });
 
-            var upnEnricher = new UPNEnricher(httpContextAccessorMock.Object);
+            var upnEnricher = new UpnEnricher(httpContextAccessorMock.Object);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
