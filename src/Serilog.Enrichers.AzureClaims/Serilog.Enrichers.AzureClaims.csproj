@@ -12,10 +12,15 @@
     <authors>Thorstein Løkensgard</authors>
     <owners>Intility</owners>
     <Company>Intility</Company>
-    <description>Enrich logs with Azure AD Claims</description>
-    <Tags>Serilog, UPN, OID, ObjectId, TID, TenantId, Azure Claims</Tags>
+    <description>Enrich Serilog events with properties from Azure Claims.</description>
+    <PackageTags>serilog;enrichers;azure claims;claims</PackageTags>
     <PackageReadMeFile>README.md</PackageReadMeFile>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <RepositoryUrl>https://github.com/Intility/serilog-enrichers-azureclaims</RepositoryUrl>
+    <PackageReleaseNotes>https://github.com/Intility/serilog-enrichers-azureclaims/releases</PackageReleaseNotes>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>serilog-enricher-nuget.png</PackageIcon>
+    <PackageIconUrl>https://cdn.jsdelivr.net/gh/serilog-contrib/brand/logo/enricher/serilog-enricher-nuget.png</PackageIconUrl>
   </PropertyGroup>
 
   <ItemGroup>
@@ -25,6 +30,10 @@
 
   <ItemGroup>
     <None Include="../../README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="../../assets/serilog-enricher-nuget.png" Pack="true" Visible="false" PackagePath="\" />
   </ItemGroup>
 
   <ItemGroup>
