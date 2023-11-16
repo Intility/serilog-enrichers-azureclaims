@@ -22,7 +22,7 @@ partial class Build : NukeBuild
 
     [Solution] readonly Solution Solution;
     [GitRepository] readonly GitRepository GitRepository;
-    [GitVersion(NoFetch = true, Framework = "net7.0")] readonly GitVersion GitVersion;
+    [GitVersion(NoFetch = true, Framework = "net8.0")] readonly GitVersion GitVersion;
 
     Target Pack => _ => _
         .DependsOn(Clean, Compile)
