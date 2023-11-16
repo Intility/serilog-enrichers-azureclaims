@@ -1,0 +1,5 @@
+{
+  "sdk": {
+    "version": "8.0.100" // Specify the .NET SDK version you intend to use
+  }
+}
