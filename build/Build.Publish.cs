@@ -11,7 +11,8 @@ using Nuke.Common.Tools.GitVersion;
            InvokedTargets = new[] { nameof(Push) },
            FetchDepth = 0,
            ImportSecrets = new[] { nameof(NugetApiKey) },
-    AutoGenerate = true)]
+    AutoGenerate = false)]
+
 partial class Build : NukeBuild
 {
     [Parameter("Api key to use when pushing the package")]
