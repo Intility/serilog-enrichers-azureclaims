@@ -2,7 +2,6 @@ using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.IO;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Tools.GitVersion;
 
 [ShutdownDotNetAfterServerBuild]
 partial class Build : NukeBuild
@@ -11,7 +10,6 @@ partial class Build : NukeBuild
 
     [Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
     readonly Configuration Configuration = IsLocalBuild ? Configuration.Debug : Configuration.Release;
-
 
     Target Clean => _ => _
         .Before(Restore)
