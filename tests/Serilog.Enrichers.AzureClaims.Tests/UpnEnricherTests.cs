@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Moq;
+using NSubstitute;
 using Serilog.Enrichers.AzureClaims.Tests.Helpers;
 using Serilog.Events;
 using System.Security.Claims;
@@ -13,10 +13,10 @@ namespace Serilog.Enrichers.AzureClaims.Tests
         public void LogEvent_DoesNotContainUPNWhenUserIsNotLoggedIn()
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
+            var httpContextAccessorMock = Substitute.For<IHttpContextAccessor>();
+            httpContextAccessorMock.HttpContext.Returns(new DefaultHttpContext());
 
-            var upnEnricher = new UpnEnricher(httpContextAccessorMock.Object);
+            var upnEnricher = new UpnEnricher(httpContextAccessorMock);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -25,7 +25,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 .CreateLogger();
 
             // Act
-            log.Information(@"UPN property is not set when user is not logged in");
+            log.Information(@"UPN property is not set when the user is not logged in");
 
             // Assert
             Assert.NotNull(evt);
@@ -36,15 +36,15 @@ namespace Serilog.Enrichers.AzureClaims.Tests
         public void LogEvent_ContainsUnknownUPNWhenUserIsLoggedInButUPNIsNotFound()
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
+            var httpContextAccessorMock = Substitute.For<IHttpContextAccessor>();
             var user = new ClaimsPrincipal(TestClaimsProvider.NotValidClaims().GetClaimsPrincipal());
 
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext
+            httpContextAccessorMock.HttpContext.Returns(new DefaultHttpContext
             {
                 User = user
             });
 
-            var upnEnricher = new UpnEnricher(httpContextAccessorMock.Object);
+            var upnEnricher = new UpnEnricher(httpContextAccessorMock);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -53,7 +53,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 .CreateLogger();
 
             // Act
-            log.Information(@"UserPrincipalName property is set to unknown when user is logged in");
+            log.Information(@"UserPrincipalName property is set to unknown when the user is logged in");
 
             // Assert
             Assert.NotNull(evt);
@@ -65,15 +65,15 @@ namespace Serilog.Enrichers.AzureClaims.Tests
         public void LogEvent_ContainUPNWhenUserIsLoggedIn()
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
+            var httpContextAccessorMock = Substitute.For<IHttpContextAccessor>();
             var user = new ClaimsPrincipal(TestClaimsProvider.ValidClaims().GetClaimsPrincipal());
 
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext
+            httpContextAccessorMock.HttpContext.Returns(new DefaultHttpContext
             {
                 User = user
             });
 
-            var upnEnricher = new UpnEnricher(httpContextAccessorMock.Object);
+            var upnEnricher = new UpnEnricher(httpContextAccessorMock);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -82,7 +82,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 .CreateLogger();
 
             // Act
-            log.Information(@"UserPrincipalName property is set when user is logged in");
+            log.Information(@"UserPrincipalName property is set when the user is logged in");
 
             // Assert
             Assert.NotNull(evt);

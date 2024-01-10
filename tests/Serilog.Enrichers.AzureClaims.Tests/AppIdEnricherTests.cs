@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Moq;
+using NSubstitute;
 using Serilog.Enrichers.AzureClaims.Tests.Helpers;
 using Serilog.Events;
 using System.Security.Claims;
@@ -13,10 +13,10 @@ namespace Serilog.Enrichers.AzureClaims.Tests
         public void LogEvent_DoesNotContainAppIdWhenUserIsNotLoggedIn()
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
+            var httpContextAccessor = Substitute.For<IHttpContextAccessor>();
+            httpContextAccessor.HttpContext.Returns(new DefaultHttpContext());
 
-            var appidEnricher = new AppIdEnricher(httpContextAccessorMock.Object);
+            var appidEnricher = new AppIdEnricher(httpContextAccessor);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -36,15 +36,15 @@ namespace Serilog.Enrichers.AzureClaims.Tests
         public void LogEvent_ContainsUnknownAppIdWhenUserIsLoggedInButAppIdIsNotFound()
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
+            var httpContextAccessor = Substitute.For<IHttpContextAccessor>();
             var user = new ClaimsPrincipal(TestClaimsProvider.NotValidClaims().GetClaimsPrincipal());
 
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext
+            httpContextAccessor.HttpContext.Returns(new DefaultHttpContext
             {
                 User = user
             });
 
-            var appidEnricher = new AppIdEnricher(httpContextAccessorMock.Object);
+            var appidEnricher = new AppIdEnricher(httpContextAccessor);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -67,16 +67,16 @@ namespace Serilog.Enrichers.AzureClaims.Tests
         public void LogEvent_ContainAppIdWhenUserIsLoggedIn(string claim)
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
+            var httpContextAccessor = Substitute.For<IHttpContextAccessor>();
             var claimValue = Guid.NewGuid().ToString();
             var user = new ClaimsPrincipal(TestClaimsProvider.ValidClaims().AddClaim(claim, claimValue).GetClaimsPrincipal());
 
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext
+            httpContextAccessor.HttpContext.Returns(new DefaultHttpContext
             {
                 User = user
             });
 
-            var appidEnricher = new AppIdEnricher(httpContextAccessorMock.Object);
+            var appidEnricher = new AppIdEnricher(httpContextAccessor);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
