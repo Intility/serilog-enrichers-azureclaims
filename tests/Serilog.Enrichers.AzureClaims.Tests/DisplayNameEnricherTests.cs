@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Moq;
+using NSubstitute;
 using Serilog.Enrichers.AzureClaims.Tests.Helpers;
 using Serilog.Events;
 using System.Security.Claims;
@@ -13,10 +13,10 @@ namespace Serilog.Enrichers.AzureClaims.Tests
         public void LogEvent_DoesNotContainDisplayNameWhenUserIsNotLoggedIn()
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
+            var httpContextAccessorMock = Substitute.For<IHttpContextAccessor>();
+            httpContextAccessorMock.HttpContext.Returns(new DefaultHttpContext());
 
-            var displayNameEnricher = new DisplayNameEnricher(httpContextAccessorMock.Object);
+            var displayNameEnricher = new DisplayNameEnricher(httpContextAccessorMock);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -25,7 +25,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 .CreateLogger();
 
             // Act
-            log.Information(@"DisplayName property is not set when user is not logged in");
+            log.Information(@"DisplayName property is not set when the user is not logged in");
 
             // Assert
             Assert.NotNull(evt);
@@ -36,15 +36,15 @@ namespace Serilog.Enrichers.AzureClaims.Tests
         public void LogEvent_ContainsUnknownDisplayNameWhenUserIsLoggedInButDisplayNameIsNotFound()
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
+            var httpContextAccessorMock = Substitute.For<IHttpContextAccessor>();
             var user = new ClaimsPrincipal(TestClaimsProvider.NotValidClaims().GetClaimsPrincipal());
 
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext
+            httpContextAccessorMock.HttpContext.Returns(new DefaultHttpContext
             {
                 User = user
             });
 
-            var displayNameEnricher = new DisplayNameEnricher(httpContextAccessorMock.Object);
+            var displayNameEnricher = new DisplayNameEnricher(httpContextAccessorMock);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -53,7 +53,7 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 .CreateLogger();
 
             // Act
-            log.Information(@"DisplayName property is set to unknown when user is logged in");
+            log.Information(@"DisplayName property is set to unknown when the user is logged in");
 
             // Assert
             Assert.NotNull(evt);
@@ -65,15 +65,15 @@ namespace Serilog.Enrichers.AzureClaims.Tests
         public void LogEvent_ContainDisplayNameWhenUserIsLoggedIn()
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
+            var httpContextAccessorMock = Substitute.For<IHttpContextAccessor>();
             var user = new ClaimsPrincipal(TestClaimsProvider.ValidClaims().GetClaimsPrincipal());
 
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext
+            httpContextAccessorMock.HttpContext.Returns(new DefaultHttpContext
             {
                 User = user
             });
 
-            var displayNameEnricher = new DisplayNameEnricher(httpContextAccessorMock.Object);
+            var displayNameEnricher = new DisplayNameEnricher(httpContextAccessorMock);
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -82,14 +82,13 @@ namespace Serilog.Enrichers.AzureClaims.Tests
                 .CreateLogger();
 
             // Act
-            log.Information(@"DisplayName property is set when user is logged in");
+            log.Information(@"DisplayName property is set when the user is logged in");
 
             // Assert
             Assert.NotNull(evt);
             Assert.True(evt.Properties.ContainsKey("DisplayName"));
             Assert.Equal(TestConstants.NAME, evt.Properties["DisplayName"].LiteralValue().ToString());
         }
-
-
     }
 }
+

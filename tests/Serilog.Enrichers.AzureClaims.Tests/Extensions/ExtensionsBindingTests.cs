@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Moq;
+using NSubstitute;
 using Serilog.Core;
 using Serilog.Enrichers.AzureClaims.Tests.Helpers;
 using Serilog.Events;
@@ -14,9 +14,8 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
         public void AllEnrichers_AreAddedToTheBuilder()
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
-
+            var httpContextAccessorMock = Substitute.For<IHttpContextAccessor>();
+            httpContextAccessorMock.HttpContext.Returns(new DefaultHttpContext());
 
             // Remember to add all enrichers to the builder, if not the test will fail
             LogEvent evt = null;
@@ -47,7 +46,6 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
                 item => Assert.Equal(nameof(DisplayNameEnricher), item.GetType().Name));
         }
 
-        
         // Method to count the number of enrichers in the project. Ignores the base enricher
         private int GetCountOfEnrichers()
         {
@@ -64,8 +62,8 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
         public void UPNEnricher_IsAddedToTheBuilder()
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
+            var httpContextAccessorMock = Substitute.For<IHttpContextAccessor>();
+            httpContextAccessorMock.HttpContext.Returns(new DefaultHttpContext());
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -86,8 +84,8 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
         public void AppIdEnricher_IsAddedToTheBuilder()
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
+            var httpContextAccessorMock = Substitute.For<IHttpContextAccessor>();
+            httpContextAccessorMock.HttpContext.Returns(new DefaultHttpContext());
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -108,8 +106,8 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
         public void TenantIdEnricher_IsAddedToTheBuilder()
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
+            var httpContextAccessorMock = Substitute.For<IHttpContextAccessor>();
+            httpContextAccessorMock.HttpContext.Returns(new DefaultHttpContext());
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -130,8 +128,8 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
         public void DisplayNameEnricher_IsAddedToTheBuilder()
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
+            var httpContextAccessorMock = Substitute.For<IHttpContextAccessor>();
+            httpContextAccessorMock.HttpContext.Returns(new DefaultHttpContext());
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
@@ -152,8 +150,8 @@ namespace Serilog.Enrichers.AzureClaims.Tests.Extensions
         public void OIDEnricher_IsAddedToTheBuilder()
         {
             // Arrange
-            var httpContextAccessorMock = new Mock<IHttpContextAccessor>();
-            httpContextAccessorMock.Setup(x => x.HttpContext).Returns(new DefaultHttpContext());
+            var httpContextAccessorMock = Substitute.For<IHttpContextAccessor>();
+            httpContextAccessorMock.HttpContext.Returns(new DefaultHttpContext());
 
             LogEvent evt = null;
             var log = new LoggerConfiguration()
